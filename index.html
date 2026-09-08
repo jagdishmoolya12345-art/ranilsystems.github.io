@@ -229,13 +229,13 @@
             color: var(--white);
         }
 
-        .contact-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
+        /* Center align contact info */
+        .contact-info {
+            text-align: center;
         }
 
         .contact-info p {
+            justify-content: center; /* Centers the icon and text together */
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
