@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranil System | CCTV Sales & Security Services</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --accent-color: #2563eb;
+            --text-color: #334155;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            color: var(--text-color);
+            background-color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .cta-btn {
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .cta-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            color: var(--white);
+            text-align: center;
+            padding: 8rem 5%;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero span {
+            color: var(--accent-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: #cbd5e1;
+        }
+
+        /* Sections General */
+        section {
+            padding: 5rem 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        .section-title span {
+            color: var(--accent-color);
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--light-bg);
+            padding: 2.5rem 2rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--accent-color);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .service-card i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Products Showcase */
+        .products {
+            background: var(--light-bg);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-img {
+            height: 200px;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #64748b;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .product-info p {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Why Us Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .feature-box i {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 0.8rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .contact .section-title {
+            color: var(--white);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #cbd5e1;
+        }
+
+        .contact-info i {
+            color: var(--accent-color);
+        }
+
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-form input, 
+        .contact-form textarea {
+            padding: 0.8rem;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            height: 120px;
+        }
+
+        .contact-form button {
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .contact-form button:hover {
+            background: #1d4ed8;
+        }
+
+        /* Footer */
+        footer {
+            background: #090d16;
+            color: #94a3b8;
+            text-align: center;
+            padding: 1.5rem 5%;
+            font-size: 0.9rem;
+        }
+
+        @media(max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-video"></i> Ranil System
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#why-us">Why Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- <a href="#contact" class="cta-btn">Get a Quote</a> -->
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <h1>Welcome to <span>Ranil System</span></h1>
+        <p>Complete sales, professional installation, and maintenance services for homes, offices, and industrial security systems.</p>
+        <!-- <a href="#contact" class="cta-btn" style="padding: 0.8rem 1.8rem; font-size: 1rem;">Book Free Site Survey</a> -->
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <h2 class="section-title">Our <span>Services</span></h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fa-solid fa-camera-retro"></i>
+                <h3>CCTV Installation</h3>
+                <p>Expert setup and wiring configuration for dome, bullet, and PTZ security cameras tailored to your layout.</p>
+            </div>
+            <div class="service-card">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <h3>Maintenance & Repair</h3>
+                <p>Routine checks, camera repositioning, lens cleaning, and quick troubleshooting for faulty security systems.</p>
+            </div>
+            <div class="service-card">
+                <i class="fa-solid fa-network-wired"></i>
+                <h3>IP & Networking Setup</h3>
+                <p>Configuration of NVR/DVR systems, mobile app live streaming setups, and remote monitoring capabilities.</p>
+            </div>
+            <div class="service-card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3>Security Upgrades</h3>
+                <p>Upgrading your analog system to high-definition 4K digital surveillance setups with night-vision and audio support.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Products Showcase -->
+    <section id="products" class="products">
+        <h2 class="section-title">Popular <span>Products</span></h2>
+        <div class="products-grid">
+            
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOR87EisyJEdh1ZbhXearCqqMqYRPrZP5w0194bBgWzA&s=10" alt="HD Dome Cameras" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="product-info">
+                    <h3>HD Dome Cameras</h3>
+                    <p>Best for indoor retail spaces, offices, and hallways with wide-angle coverage.</p>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOnoJUkkm8cPScX1A5MIcprDiKgCVdf3l0AEKu2zmIzQ&s=10" alt="Outdoor Bullet Cameras" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="product-info">
+                    <h3>Outdoor Bullet Cameras</h3>
+                    <p>Weatherproof (IP67) cameras with advanced infrared night vision for property boundaries.</p>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://www.matrixcomsec.com/wp-content/uploads/2023/07/PTZ-Security-Camera.png" alt="PTZ Cameras" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="product-info">
+                    <h3>PTZ Cameras</h3>
+                    <p>Pan, Tilt, and Zoom capabilities with auto-tracking features for massive areas.</p>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYHA93Ch3hUKio4CWoomV1y7E7E-H4AD5sGyEqWAwemA&s=10" alt="DVR / NVR Recorders" style="width: 70%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="product-info">
+                    <h3>DVR / NVR Recorders</h3>
+                    <p>High-capacity storage security recorders with smart motion alerts and cloud backup options.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="why-us">
+        <h2 class="section-title">Why Choose <span>Ranil System</span></h2>
+        <div class="features">
+            <div class="feature-box">
+                <i class="fa-solid fa-award"></i>
+                <h3>Certified Technicians</h3>
+                <p>Trained professionals with extensive experience in domestic and commercial security configurations.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-handshake-angle"></i>
+                <h3>After-Sales Support</h3>
+                <p>Reliable customer care, emergency response, and annual maintenance contracts (AMC).</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-tags"></i>
+                <h3>Competitive Pricing</h3>
+                <p>Top-tier global security brand products offered at market-leading rates without hidden fees.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2 class="section-title">Get In <span>Touch</span></h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <p><i class="fa-solid fa-location-dot"></i> Virar West Near VIVA College</p>
+                <p><i class="fa-solid fa-phone"></i> +91 7276057040</p>
+                <p><i class="fa-solid fa-envelope"></i> contact@ranilsystem.com</p>
+                <p><i class="fa-solid fa-clock"></i> Mon - Sat: 10:00 AM - 06:00 PM</p>
+            </div>
+            <!-- <div class="contact-form">
+                <form action="#" method="POST">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email / Phone" required>
+                    <textarea placeholder="Tell us about your requirement (e.g., Home CCTV setup)" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Ranil System. All Rights Reserved. CCTV Sales & Services.</p>
+    </footer>
+
+</body>
+</html>
