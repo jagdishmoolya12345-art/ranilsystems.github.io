@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Ranil Systems</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --accent-color: #2563eb;
+            --text-color: #334155;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --success-color: #16a34a;
+            --warning-color: #ca8a04;
+            --danger-color: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            display: flex;
+            min-height: 100vh;
+            flex-direction: row;
+        }
+
+        /* Lock Screen Overlay Modal */
+        #lock-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .lock-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .lock-card i {
+            font-size: 3rem;
+            color: var(--danger-color);
+            margin-bottom: 1rem;
+        }
+
+        .lock-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .lock-card p {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .lock-card input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 1rem;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            outline: none;
+        }
+
+        .lock-card input:focus {
+            border-color: var(--danger-color);
+        }
+
+        .lock-btn {
+            width: 100%;
+            background: var(--danger-color);
+            color: var(--white);
+            padding: 0.8rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .lock-btn:hover {
+            background: #b91c1c;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .back-home:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hidden class for unlocking */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Sidebar */
+        aside {
+            width: 260px;
+            background: #1e293b;
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem 1.5rem;
+            flex-shrink: 0;
+        }
+
+        aside .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        aside .logo i {
+            color: var(--danger-color);
+        }
+
+        aside nav {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-grow: 1;
+        }
+
+        aside nav a {
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        aside nav a:hover, aside nav a.active {
+            background: var(--danger-color);
+            color: var(--white);
+        }
+
+        .exit-admin {
+            color: #f87171;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            margin-top: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        /* Main Content Area */
+        main {
+            flex-grow: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            width: 100%;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .admin-badge {
+            background: #fee2e2;
+            color: var(--danger-color);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .card h2 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h2 i {
+            color: var(--danger-color);
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.95rem;
+        }
+
+        th {
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .badge.pending {
+            background: #fef08a;
+            color: var(--warning-color);
+        }
+
+        .badge.confirmed {
+            background: #dcfce7;
+            color: var(--success-color);
+        }
+
+        .action-btn {
+            background: var(--accent-color);
+            color: var(--white);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .clear-btn {
+            background: var(--danger-color);
+            margin-top: 1rem;
+        }
+        .clear-btn:hover {
+            background: #b91c1c;
+        }
+
+        @media(max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            aside {
+                width: 100%;
+                height: auto;
+                padding: 1.2rem;
+            }
+            aside nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+            aside nav a {
+                padding: 0.5rem 0.7rem;
+                font-size: 0.85rem;
+                background: rgba(255, 255, 255, 0.05);
+            }
+            main {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Lock Screen Password Modal -->
+    <div id="lock-screen">
+        <div class="lock-card">
+            <i class="fa-solid fa-lock"></i>
+            <h2>Admin Login Required</h2>
+            <p>Enter the admin password to access the panel.</p>
+            <form id="lockForm">
+                <input type="password" id="adminPassword" placeholder="Enter Password " required>
+                <button type="submit" class="lock-btn">Unlock Dashboard</button>
+            </form>
+            <a href="index.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Return to Main Website</a>
+        </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside>
+        <div>
+            <div class="logo">
+                <i class="fa-solid fa-shield-halved"></i> Ranil Admin
+            </div>
+            <nav>
+                <a href="admin.html" class="active"><i class="fa-solid fa-list-check"></i> Manage Bookings</a>
+                <a href="dashboard.html"><i class="fa-solid fa-user"></i> Client Portal</a>
+                <a href="index.html"><i class="fa-solid fa-globe"></i> Main Website</a>
+            </nav>
+        </div>
+        <a href="index.html" class="exit-admin" onclick="lockAdmin()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Lock & Exit</a>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main>
+        <header>
+            <h1>Admin Control Panel</h1>
+            <div class="admin-badge">
+                <i class="fa-solid fa-lock"></i> Administrator Mode
+            </div>
+        </header>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-clipboard-list"></i> Incoming Customer Service Bookings</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Service Type</th>
+                        <th>Preferred Date</th>
+                        <th>Current Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-table-body">
+                    <!-- Data loads here -->
+                </tbody>
+            </table>
+            <button class="action-btn clear-btn" id="clearAllBtn"><i class="fa-solid fa-trash"></i> Clear All Data</button>
+        </div>
+    </main>
+
+    <!-- Admin Lock & Management Logic -->
+    <script>
+        const lockScreen = document.getElementById('lock-screen');
+        const lockForm = document.getElementById('lockForm');
+        const passwordInput = document.getElementById('adminPassword');
+        
+        const adminTableBody = document.getElementById('admin-table-body');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+
+        // Default Admin Password set to "1234" (You can change this to whatever you like)
+        const ADMIN_PIN = "admin";
+
+        // Check if admin was already unlocked during this session
+        function checkLoginState() {
+            if (sessionStorage.getItem('ranil_admin_unlocked') === 'true') {
+                lockScreen.classList.add('hidden');
+                loadAdminBookings();
+            }
+        }
+
+        // Handle Password Submission
+        lockForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (passwordInput.value === ADMIN_PIN) {
+                sessionStorage.setItem('ranil_admin_unlocked', 'true');
+                lockScreen.classList.add('hidden');
+                loadAdminBookings();
+            } else {
+                alert('Incorrect password! Try "Again".');
+                passwordInput.value = '';
+            }
+        });
+
+        // Lock admin again when exiting
+        window.lockAdmin = function() {
+            sessionStorage.removeItem('ranil_admin_unlocked');
+        }
+
+        // Load bookings from shared Local Storage
+        function loadAdminBookings() {
+            const savedBookings = localStorage.getItem('ranil_bookings');
+            
+            if (savedBookings) {
+                adminTableBody.innerHTML = savedBookings;
+                addAdminControls();
+            } else {
+                adminTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #64748b;">No bookings found yet.</td></tr>`;
+            }
+        }
+
+        // Add action buttons to toggle status
+        function addAdminControls() {
+            const rows = adminTableBody.querySelectorAll('tr');
+            rows.forEach((row) => {
+                if(row.cells.length < 4) {
+                    const actionCell = document.createElement('td');
+                    actionCell.innerHTML = `<button class="action-btn" onclick="toggleStatus(this)">Toggle Status</button>`;
+                    row.appendChild(actionCell);
+                } else {
+                    row.cells[3].innerHTML = `<button class="action-btn" onclick="toggleStatus(this)">Toggle Status</button>`;
+                }
+            });
+        }
+
+        // Toggle between Pending and Confirmed
+        window.toggleStatus = function(button) {
+            const row = button.closest('tr');
+            const badge = row.querySelector('.badge');
+            
+            if (badge.classList.contains('pending')) {
+                badge.classList.remove('pending');
+                badge.classList.add('confirmed');
+                badge.textContent = 'Confirmed';
+            } else {
+                badge.classList.remove('confirmed');
+                badge.classList.add('pending');
+                badge.textContent = 'Pending Survey';
+            }
+
+            localStorage.setItem('ranil_bookings', adminTableBody.innerHTML);
+        }
+
+        // Clear all records
+        clearAllBtn.addEventListener('click', function() {
+            if(confirm('Are you sure you want to clear all booking records?')) {
+                localStorage.removeItem('ranil_bookings');
+                adminTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #64748b;">No bookings found yet.</td></tr>`;
+            }
+        });
+
+        // Run check when page opens
+        window.onload = checkLoginState;
+    </script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard | Ranil Systems</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --accent-color: #2563eb;
+            --text-color: #334155;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --success-color: #16a34a;
+            --warning-color: #ca8a04;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            display: flex;
+            min-height: 100vh;
+            flex-direction: row;
+        }
+
+        /* Sidebar */
+        aside {
+            width: 260px;
+            background: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem 1.5rem;
+            flex-shrink: 0;
+        }
+
+        aside .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        aside .logo i {
+            color: var(--accent-color);
+        }
+
+        aside nav {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-grow: 1;
+        }
+
+        aside nav a {
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        aside nav a:hover, aside nav a.active {
+            background: var(--accent-color);
+            color: var(--white);
+        }
+
+        .logout-btn {
+            color: #f87171;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            margin-top: 1rem;
+        }
+
+        /* Main Content Area */
+        main {
+            flex-grow: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            width: 100%;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .user-profile i {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        /* Dashboard Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .card h2 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h2 i {
+            color: var(--accent-color);
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 400px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.95rem;
+        }
+
+        th {
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .badge.pending {
+            background: #fef08a;
+            color: var(--warning-color);
+        }
+
+        .badge.confirmed {
+            background: #dcfce7;
+            color: var(--success-color);
+        }
+
+        /* Booking Form */
+        .booking-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 0.8rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            outline: none;
+            font-size: 0.95rem;
+            width: 100%;
+        }
+
+        .submit-btn {
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 0.8rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* BULLETPROOF MOBILE VIEW: Stacks navigation cleanly on mobile screens */
+        @media(max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            aside {
+                width: 100%;
+                height: auto;
+                padding: 1.2rem;
+                display: block; /* Changes from flex to block to prevent clipping */
+            }
+            aside .logo {
+                margin-bottom: 1rem;
+            }
+            aside nav {
+                display: flex;
+                flex-direction: column; /* Stacks links vertically so nothing is hidden */
+                gap: 8px;
+                margin-bottom: 1rem;
+            }
+            aside nav a {
+                padding: 0.7rem 1rem;
+                background: rgba(255, 255, 255, 0.08); /* Clear button background */
+            }
+            .logout-btn {
+                display: block;
+                padding: 0.7rem 1rem;
+                background: rgba(248, 113, 113, 0.1);
+                border-radius: 6px;
+            }
+            main {
+                padding: 1rem;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside>
+        <div>
+            <div class="logo">
+                <i class="fa-solid fa-video"></i> Ranil Systems
+            </div>
+            <nav>
+                <a href="dashboard.html" class="active"><i class="fa-solid fa-house"></i> Dashboard</a>
+                <a href="admin.html"><i class="fa-solid fa-user-shield"></i> Admin Panel</a>
+                <a href="index.html"><i class="fa-solid fa-globe"></i> Main Website</a>
+            </nav>
+        </div>
+        <a href="index.html" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main>
+        <header>
+            <h1>Welcome, Customer!</h1>
+            <div class="user-profile">
+                <i class="fa-solid fa-user-circle"></i>
+                <span>Virar Client</span>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- Left Column: Active Bookings List -->
+            <div>
+                <div class="card">
+                    <h2><i class="fa-solid fa-calendar-check"></i> Your Service Bookings</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Service Type</th>
+                                <th>Preferred Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="booking-table-body">
+                            <tr>
+                                <td>CCTV Installation (4 Cameras)</td>
+                                <td>2026-06-15</td>
+                                <td><span class="badge confirmed">Confirmed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Maintenance & Lens Cleaning</td>
+                                <td>2026-06-22</td>
+                                <td><span class="badge pending">Pending Survey</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Right Column: New Booking Form -->
+            <div>
+                <div class="card">
+                    <h2><i class="fa-solid fa-plus-circle"></i> Book New Service</h2>
+                    <form class="booking-form" id="serviceForm">
+                        <div class="form-group">
+                            <label>Select Service</label>
+                            <select id="serviceType" required>
+                                <option value="CCTV Installation">CCTV Installation</option>
+                                <option value="Maintenance & Repair">Maintenance & Repair</option>
+                                <option value="IP & Networking Setup">IP & Networking Setup</option>
+                                <option value="Security Upgrades">Security Upgrades</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Preferred Date</label>
+                            <input type="date" id="serviceDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Installation Address (e.g. Virar West)</label>
+                            <textarea id="serviceAddress" placeholder="Enter your full address..." rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Confirm Booking</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript with Local Storage Support -->
+    <script>
+        const form = document.getElementById('serviceForm');
+        const tableBody = document.getElementById('booking-table-body');
+
+        // 1. Load saved bookings when the page opens
+        function loadBookings() {
+            const savedBookings = localStorage.getItem('ranil_bookings');
+            
+            if (savedBookings) {
+                // If there are saved bookings, clear the default ones and load saved ones
+                tableBody.innerHTML = savedBookings;
+            }
+        }
+
+        // 2. Save current table state to local storage
+        function saveBookings() {
+            localStorage.setItem('ranil_bookings', tableBody.innerHTML);
+        }
+
+        // Run loadBookings as soon as the page loads
+        window.onload = loadBookings;
+
+        // 3. Handle new form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent page reload
+
+            const service = document.getElementById('serviceType').value;
+            const date = document.getElementById('serviceDate').value;
+
+            // Create new table row dynamically
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${service}</td>
+                <td>${date}</td>
+                <td><span class="badge pending">Pending Survey</span></td>
+            `;
+
+            // Add the new row to the top of the table
+            tableBody.prepend(newRow);
+
+            // Save to browser storage immediately
+            saveBookings();
+
+            alert('Service successfully booked! Saved to browser storage.');
+            form.reset();
+        });
+    </script>
+</body>
+</html>
